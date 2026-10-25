@@ -1,14 +1,19 @@
 import java.sql.*;
-public class Database{
-    public static void main(String[] args) {  //i can throws SQLexpections without error handling inseide the main
-        try(Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/expensetracker","root","#")){
-                    if(con!=null){
-                        Statement stmt=con.createStatement();
-                        stmt.executeUpdate("CREATE TABLE Expense(id INTEGER PRIMARY KEY ,date DATE,category VARCHAR(50),expense INTEGER)");
-                    }
-        }
-        catch(SQLException e){
-            System.out.println("error"+e);
+public class Database {
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/expensetracker",
+            "root",
+            "#"
+        );
+    }
+public static void main(String[] args) {
+        try (Connection con = getConnection()) {
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("CREATE TABLE  Expense (id INT PRIMARY KEY,category VARCHAR(50),expense INT ,date DATE)");
+            System.out.println("Database connected and table ready.");
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
