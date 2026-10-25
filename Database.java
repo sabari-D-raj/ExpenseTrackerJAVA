@@ -1,11 +1,7 @@
 import java.sql.*;
 public class Database {
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/expensetracker",
-            "root",
-            "#"
-        );
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/expensetracker","root","sabarirajthumbi@123");
     }
 public static void main(String[] args) {
         try (Connection con = getConnection()) {
