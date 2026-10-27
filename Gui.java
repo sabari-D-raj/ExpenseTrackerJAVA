@@ -14,26 +14,36 @@ public class Gui{
           JTextField jt2=new JTextField("");
           JTextField jt3=new JTextField();
           JButton jb=new JButton("SUBMIT");
-          LocalDate startDate=LocalDate.parse(jt.getText());
-          LocalDate endDate=LocalDate.parse(jt2.getText());
-          Connection con=Database.getConnection();
-          ResultSet val = Managementdb.reportExpense(startDate,endDate,con);
-          StringBuilder result = new StringBuilder();
-          while(val.next()){
-              String category=val.getString("category");
-              int amount = val.getInt("total");
-              result.append(category);
-              result.append(":₹");
-              result.append(amount);
-              result.append("\n");
-          }
-          jt3.setText(result.toString());
           jf.add(jl);
           jf.add(jt);
           jf.add(jl2);
           jf.add(jt2);
           jf.add(jt3);
           jf.add(jb);
+          jb.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                    try{
+                    LocalDate startDate=LocalDate.parse(jt.getText());
+                    LocalDate endDate=LocalDate.parse(jt2.getText());
+                    Connection con=Database.getConnection();
+                    ResultSet val = Managementdb.reportExpense(startDate,endDate,con);
+                    StringBuilder result = new StringBuilder();
+                    while(val.next()){
+                        String category=val.getString("category");
+                        int amount = val.getInt("total");
+                        result.append(category);
+                        result.append(":₹");
+                        result.append(amount);
+                        result.append("\n");
+                    }
+                    jt3.setText(result.toString());
+                }
+                    catch(SQLException ex){
+                        JOptionPane.showMessageDialog(jf, e);  
+                    }
+                
+          }                 
+            });
         jf.setVisible(true);
     }   
     public static void main(String[] args){
