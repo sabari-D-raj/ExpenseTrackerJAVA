@@ -10,7 +10,7 @@ public class Managementdb {
         ps.executeUpdate();
     
     }
-    public ResultSet reportExpense(LocalDate start,LocalDate end,Connection con) throws SQLException{
+    public static ResultSet reportExpense(LocalDate start,LocalDate end,Connection con) throws SQLException{
             PreparedStatement ps= con.prepareStatement("SELECT category,SUM(expense) AS total FROM Expense WHERE `date`>=? AND `date`<=? GROUP BY category ORDER BY total DESC ");
             ps.setDate(1, java.sql.Date.valueOf(start));
             ps.setDate(2,java.sql.Date.valueOf(end));
